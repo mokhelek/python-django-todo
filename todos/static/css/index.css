@@ -1,0 +1,57 @@
+
+#searchInput{
+    border-radius: 8px;
+    background-color: rgb(240, 240, 240) !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: rgb(53, 53, 53);
+    height: 2rem;
+    width:10rem;
+}
+
+#todo-container{
+
+    background-color: rgb(30, 30, 30);
+    border-radius: 30px;
+    margin-top: 20px;
+    min-height: 450px;
+}
+
+
+a{
+    text-decoration: none;
+}
+button:hover{
+    background-color: rgb(255, 187, 86) !important;
+}
+#addIcon :hover{
+   color: rgb(255, 187, 86) ;
+}
+.mb-3{
+    margin: 8px !important;
+}
+#id_title{
+    background-color: rgb(65, 65, 65) !important;
+    height: 2.3rem !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0cm !important;
+    color:rgb(193, 193, 193);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+#id_body{
+    background-color: rgb(65, 65, 65) !important;
+    height: 5rem !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0cm !important;
+    color:rgb(193, 193, 193);
+    font-size: 1rem;
+}
+.form-label{
+    display: none !important;
+}
+
+

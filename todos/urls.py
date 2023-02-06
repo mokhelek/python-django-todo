@@ -9,4 +9,5 @@ urlpatterns = [
     path('delete-todo/<int:todo_id>/',views.deleteTodo, name = "deleteTodo"),       # URL to delete a to-do
     path('edit-todo/<int:todo_id>/',views.editTodo, name = "editTodo"),         # URL to modify the to-do
     path('mark-complete/<int:todo_id>/',views.markComplete, name = "markComplete"),  
+    path('search-todos',views.searchTodos , name = "searchTodos"), 
 ]

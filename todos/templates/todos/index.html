@@ -1,48 +1,9 @@
 {% extends 'todos/base.html' %} 
 {% load bootstrap5 %}
-{% bootstrap_css %} {%
-bootstrap_javascript %} 
+
+{% load static %}
 
 {% block content %}
-
-<style>
-    a{
-        text-decoration: none;
-    }
-    button:hover{
-        background-color: rgb(255, 187, 86) !important;
-    }
-    #addIcon :hover{
-       color: rgb(255, 187, 86) ;
-    }
-    .mb-3{
-        margin: 8px !important;
-    }
-    #id_title{
-        background-color: rgb(65, 65, 65) !important;
-        height: 2.3rem !important;
-        border: none !important;
-        box-shadow: none !important;
-        margin: 0cm !important;
-        color:rgb(193, 193, 193);
-        font-size: 1rem;
-        font-weight: 600;
-    }
-
-    #id_body{
-        background-color: rgb(65, 65, 65) !important;
-        height: 5rem !important;
-        border: none !important;
-        box-shadow: none !important;
-        margin: 0cm !important;
-        color:rgb(193, 193, 193);
-        font-size: 1rem;
-    }
-    .form-label{
-        display: none !important;
-    }
-</style>
-
 
 
 <body style="background-color: rgb(50, 50, 50);">
@@ -55,19 +16,73 @@ bootstrap_javascript %}
 
   <div class="d-flex justify-content-center">
     
-    <div
-      style="
-        background-color: rgb(30, 30, 30);
-        border-radius: 30px;
-        margin-top: 20px;
-        min-height: 450px;
-      "
-      class="col-md-7"
-    >
-    <div style="height: 5.5rem;background-color: rgb(77, 77, 77);border-radius: 20px 20px 0px 0px;">
+    <div id="todo-container" class="col-md-7">
+    
+      <!-- ################################### Start Header ######################################## -->
 
+    <div style="height: 5.5rem;background-color: rgb(77, 77, 77);border-radius: 20px 20px 0px 0px;">
+      <div class="container">
+        <br>
+
+        <div class="d-flex">
+
+
+          <div class="">
+            <h4 style="color: rgb(195, 195, 195);margin-left:22px;font-weight: 600;">Tasks ({{entries.count}}) </h4>
+          </div>
+
+          <div style="padding-left: 1.5rem;">
+         <div class="dropdown">
+          <button class="btn btn-light dropdown-toggle btn-sm" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16">
+              <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z"/>
+            </svg>  Filter Tasks
+          </button>
+          <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2" style="width: 200px;">
+            
+            <li> 
+              
+              <form action="" method='post'>
+                {% csrf_token %}   
+                <div style="margin-left: 0.2cm;">  
+
+                  <div>   
+                    <button style= "color: #051622;" href="#" class="btn btn-light btn-sm"  name="all"> All Articles </button> 
+                   </div>
+
+                  <div>   
+                 <button style= "color: #051622;" href="#" class="btn btn-light btn-sm"  name="unpublished"> Completed Tasks </button> 
+                </div>
+
+                <div> 
+                   <button style= "color: #051622;" href="#" class="btn btn-light btn-sm " name="published"> Uncompleted Tasks </button>  
+                  </div>
+
+
+                </div>
+              </form>
+
+            </li>
+
+          </ul>
+        </div>
+        </div>
+
+          <div style="padding-left: 1.5rem;">
+              <form  action="{% url 'todos:searchTodos' %}" method="post">
+                {% csrf_token %}
+               <input class="mr-sm-2"  id="searchInput" name="search" type="text" placeholder="Search">
+               <span > <button  name="submit" class="btn btn-dark btn-sm">Search</button> </span>
+              </form> 
+          </div>
+        </div>
+
+      </div>
+  
     </div>
-   
+      <!-- ################################### End Header ######################################## -->
+
+
   <div style="margin-top: -28px;" class="d-flex justify-content-end">
     <a id="addIcon" onclick="addNote()" style="color: rgb(255, 162, 22);margin-right: 30px;cursor: pointer;"  >
         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
@@ -102,7 +117,7 @@ bootstrap_javascript %}
                 <a
                 href="{% url 'todos:todoDetail' entry.id %}"
                 style="
-                  color: rgb(165, 165, 165);
+                  color: rgb(195, 195, 195);
                   font-weight: 600;
                   text-decoration: none;
                   font-size: 1.2rem;
@@ -141,27 +156,7 @@ bootstrap_javascript %}
   </div>
 
 
-<script>
-
-    function addNote(){
-        let addNoteForm = document.getElementById("addNoteForm");
-
-        if (addNoteForm.style.display == "none"){
-            addNoteForm.style.display = "block" ;
-        }else{
-            addNoteForm.style.display = "none" ;
-        }
-
-    }
-
-
-
-</script>
-
-
-
-
-
+  <script src="{% static 'js/index.js' %}"></script>
 </body>
 
 {% endblock content %}
