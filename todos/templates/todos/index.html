@@ -1,37 +1,168 @@
-{% extends 'todos/base.html'  %}
+{% extends 'todos/base.html' %} 
 {% load bootstrap5 %}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
+{% bootstrap_css %} {%
+bootstrap_javascript %} 
 
 {% block content %}
 
-<body style="background-color: rgb(50, 50, 50)">    
-    <center>  <h1 style="color:rgb(255, 162, 22);font-size:3.5rem"> <strong> Todos </strong>  </h1>   </center> 
-    <hr style="border: 1px rgb(255, 162, 22) solid;">
-    <div  class="d-flex justify-content-center">
-       
-        <div  style="background-color: rgb(30, 30, 30);border-radius: 30px;"  class="col-md-7">
-            <div style="margin:2cm">
-                {% for entry in entries %}
-                <div style="margin-bottom: 15px;" class="card card-body">
-                    <h4>  {{entry.title}}  </h4> 
-                </div>
-                {% endfor %}
-            </div>
-     </div>
-        
+<style>
+    a{
+        text-decoration: none;
+    }
+    button:hover{
+        background-color: rgb(255, 187, 86) !important;
+    }
+    #addIcon :hover{
+       color: rgb(255, 187, 86) ;
+    }
+    .mb-3{
+        margin: 8px !important;
+    }
+    #id_title{
+        background-color: rgb(65, 65, 65) !important;
+        height: 2.3rem !important;
+        border: none !important;
+        box-shadow: none !important;
+        margin: 0cm !important;
+        color:rgb(193, 193, 193);
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    #id_body{
+        background-color: rgb(65, 65, 65) !important;
+        height: 5rem !important;
+        border: none !important;
+        box-shadow: none !important;
+        margin: 0cm !important;
+        color:rgb(193, 193, 193);
+        font-size: 1rem;
+    }
+    .form-label{
+        display: none !important;
+    }
+</style>
+
+
+
+<body style="background-color: rgb(50, 50, 50);">
+  <center>
+    <h1 style="color: rgb(255, 162, 22); font-size: 3.5rem">
+      <strong> Todos </strong>
+    </h1>
+  </center>
+  <hr style="border: 1px rgb(255, 162, 22) solid" />
+
+  <div class="d-flex justify-content-center">
+    
+    <div
+      style="
+        background-color: rgb(30, 30, 30);
+        border-radius: 30px;
+        margin-top: 20px;
+        min-height: 450px;
+      "
+      class="col-md-7"
+    >
+    <div style="height: 5.5rem;background-color: rgb(77, 77, 77);border-radius: 20px 20px 0px 0px;">
 
     </div>
+   
+  <div style="margin-top: -28px;" class="d-flex justify-content-end">
+    <a id="addIcon" onclick="addNote()" style="color: rgb(255, 162, 22);margin-right: 30px;cursor: pointer;"  >
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+          </svg>
+    </a>
+</div>
+
+      <div style="margin: 0.5cm 1cm 1cm 1cm">
+        
+        <form
+        id="addNoteForm"
+        style="display: none;margin-bottom:30px"
+        method="post"
+        action="{% url 'todos:index' %}"
+        class="form"
+      >
+        {% csrf_token %} {% bootstrap_form todoForm %}
+        <div class="d-flex justify-content-end">
+            <button style="background-color:rgb(255, 168, 39);font-size: 1rem;font-weight: 600;margin-right: 10px;" name="submit" class="btn btn-sm ">
+                Save
+              </button>
+        </div>
+        
+      </form>
+      
+
+
+        {% for entry in entries %}
+        <div class="row">
+            <div class="col-10">
+                <a
+                href="{% url 'todos:todoDetail' entry.id %}"
+                style="
+                  color: rgb(165, 165, 165);
+                  font-weight: 600;
+                  text-decoration: none;
+                  font-size: 1.2rem;
+                "
+              >
+                {{entry.title}}
+              </a>
+              <p style="margin: 0cm;color:rgb(82, 82, 82)" >last updated <span>&bull;</span>   <span>{{entry.date_added|timesince}} ago</span>  </p>
+            </div>
+
+            <div class="col-2">
+                <a href="{% url 'todos:editTodo' entry.id %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square text-primary" viewBox="0 0 16 16">
+                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                    </svg>
+                </a>
+                 <span style="margin-left: 20px;">  
+                    <a href="{% url 'todos:deleteTodo' entry.id %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash text-danger" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                          </svg>
+                    </a>  
+                </span>
+            </div>
+        </div>
+      
+
+
+
+        <hr style="border: 1px rgb(70, 70, 70) solid" />
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+
+<script>
+
+    function addNote(){
+        let addNoteForm = document.getElementById("addNoteForm");
+
+        if (addNoteForm.style.display == "none"){
+            addNoteForm.style.display = "block" ;
+        }else{
+            addNoteForm.style.display = "none" ;
+        }
+
+    }
+
+
+
+</script>
+
+
+
 
 
 </body>
 
-
 {% endblock content %}
 
-
-<form style="margin: 30px;" method="post" action="{% url 'todos:index' %}" class="form">
-    {% csrf_token %}
-    {% bootstrap_form todoForm %}
-    <button name="submit" class="btn btn-success btn-md rounded-pill ">Save</button> 
-</form>

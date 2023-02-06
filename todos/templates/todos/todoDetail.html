@@ -1,0 +1,66 @@
+{% extends 'todos/base.html'  %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block content %}
+
+<body style="background-color: rgb(50, 50, 50)">    
+    <center>  <h1 style="color:rgb(255, 162, 22);font-size:3.5rem"> <strong> Todos </strong>  </h1>   </center> 
+    <hr style="border: 1px rgb(255, 162, 22) solid;">
+
+    <div  class="d-flex justify-content-center">
+        <div class="col-10">
+            <a style="font-size: 1.2rem;margin-bottom: 5rem;" href="{% url 'todos:index' %}"> <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+              </svg> <span>back</span>  
+            </a>
+        </div>
+        <br>
+    </div>
+    <div  class="d-flex justify-content-center">
+
+        <div  style="background-color: rgb(30, 30, 30);border-radius: 30px;margin-top: 20px;min-height: 400px;"  class="col-md-7">
+          
+            <div style="margin:0.5cm 1cm 1cm 1cm">
+               
+                {% if entry.completed == True %}
+                <h3 style="color: rgb(165, 165, 165);font-weight: 600;">  {{entry.title}}
+                     <span style="margin-left: 2rem;">  
+                        <button class="btn btn-sm rounded-pill" style="background-color: rgba(25, 255, 44, 0.149);color: rgb(62, 255, 69);border:1px rgb(62, 255, 69) solid ;" >
+                            completed
+                        </button>
+                    </span>
+                 </h3> 
+                 {% else %}
+                 <h3 style="color: rgb(165, 165, 165);font-weight: 600;">  {{entry.title}}
+                    <span style="margin-left: 2rem;">  
+                       <button class="btn btn-sm rounded-pill" style="background-color: rgba(255, 220, 25, 0.149);color: rgb(255, 191, 62);border:1px rgb(255, 207, 62) solid ;" >
+                           uncompleted
+                       </button>
+                   </span>
+                </h3> 
+                {% endif %}
+
+                <p style="margin: 0cm;color:rgb(96, 96, 96)" >created &bull; {{entry.date_added|date:"d M"}}</p>
+
+                <center> <h1 style="margin: 0cm;color:rgb(69, 69, 69)">  . . .   </h1></center>
+
+                <p style="color: rgb(165, 165, 165);">  {{entry.body}}  </p> 
+                <br><br><br>
+                {% if entry.completed == False %}
+                    <a class="btn btn-sm btn-success" href="{% url 'todos:markComplete' entry.id %}"> mark complete </a>
+                {% endif %}
+            </div>
+     </div>
+        
+
+    </div>
+
+
+</body>
+
+
+
+
+{% endblock content %}
