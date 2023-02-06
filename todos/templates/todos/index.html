@@ -1,0 +1,37 @@
+{% extends 'todos/base.html'  %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block content %}
+
+<body style="background-color: rgb(50, 50, 50)">    
+    <center>  <h1 style="color:rgb(255, 162, 22);font-size:3.5rem"> <strong> Todos </strong>  </h1>   </center> 
+    <hr style="border: 1px rgb(255, 162, 22) solid;">
+    <div  class="d-flex justify-content-center">
+       
+        <div  style="background-color: rgb(30, 30, 30);border-radius: 30px;"  class="col-md-7">
+            <div style="margin:2cm">
+                {% for entry in entries %}
+                <div style="margin-bottom: 15px;" class="card card-body">
+                    <h4>  {{entry.title}}  </h4> 
+                </div>
+                {% endfor %}
+            </div>
+     </div>
+        
+
+    </div>
+
+
+</body>
+
+
+{% endblock content %}
+
+
+<form style="margin: 30px;" method="post" action="{% url 'todos:index' %}" class="form">
+    {% csrf_token %}
+    {% bootstrap_form todoForm %}
+    <button name="submit" class="btn btn-success btn-md rounded-pill ">Save</button> 
+</form>
