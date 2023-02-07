@@ -54,7 +54,7 @@ def markComplete(request, todo_id):
 
 def searchTodos(request):
     search_text = request.POST.get("search")
-    print(search_text)
+
     entries = Entry.objects.filter(title__contains = search_text).order_by("-date_added")
 
     if request.method != 'POST':
@@ -69,3 +69,29 @@ def searchTodos(request):
     context = {"entries":entries, "todoForm":todoForm }
 
     return render(request,'todos/index.html',context )
+
+def filterTodos(request):
+    entries = Entry.objects.all().order_by("-date_added")
+    filter_action = request.GET
+    if "all" in filter_action:
+        entries = Entry.objects.all().order_by("-date_added")
+
+    if "completed" in filter_action:
+        entries = Entry.objects.filter(completed = True).order_by("-date_added")
+
+    if "uncompleted" in filter_action:
+        entries = Entry.objects.filter(completed= False).order_by("-date_added")
+
+    if request.method != 'POST':
+        todoForm = EntryForm()
+
+    else:
+        todoForm = EntryForm(request.POST, request.FILES )
+        if todoForm.is_valid():
+            todoForm.save()
+            return redirect("todos:index")
+
+    context = {"entries":entries, "todoForm":todoForm }
+
+    return render(request,'todos/index.html',context )
+

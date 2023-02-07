@@ -10,3 +10,12 @@ function addNote(){
 
 }
 
+function searchBar(){
+    let search_bar = document.getElementById("search_bar");
+
+    if (search_bar.style.display == "none"){
+        search_bar.style.display = "block" ;
+    }else{
+        search_bar.style.display = "none" ;
+    }
+}

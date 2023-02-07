@@ -55,3 +55,12 @@ button:hover{
 }
 
 
+@media screen and (max-width:525px) {
+    #addIconSVG{
+        height: 45px !important;
+        width: 45px !important;
+    }
+    #form_margin{
+        margin:0cm !important ;
+    }
+}

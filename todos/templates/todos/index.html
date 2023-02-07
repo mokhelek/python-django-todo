@@ -7,16 +7,16 @@
 
 
 <body style="background-color: rgb(50, 50, 50);">
-  <center>
-    <h1 style="color: rgb(255, 162, 22); font-size: 3.5rem">
-      <strong> Todos </strong>
-    </h1>
+  <center> 
+    <a href="{% url 'todos:index'  %}">
+     <h1 style="color:rgb(255, 162, 22);font-size:3.5rem"> <strong> To<span style="color: rgb(32, 114, 255);" >do</span>  </strong>  </h1>   
+    </a>
   </center>
   <hr style="border: 1px rgb(255, 162, 22) solid" />
 
   <div class="d-flex justify-content-center">
     
-    <div id="todo-container" class="col-md-7">
+    <div id="todo-container" class="col-md-7 col-sm-9 col-12">
     
       <!-- ################################### Start Header ######################################## -->
 
@@ -32,6 +32,7 @@
           </div>
 
           <div style="padding-left: 1.5rem;">
+
          <div class="dropdown">
           <button class="btn btn-light dropdown-toggle btn-sm" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16">
@@ -42,20 +43,20 @@
             
             <li> 
               
-              <form action="" method='post'>
-                {% csrf_token %}   
+              <form action="{% url 'todos:filterTodos' %}" method='get'>
+                 
                 <div style="margin-left: 0.2cm;">  
 
                   <div>   
-                    <button style= "color: #051622;" href="#" class="btn btn-light btn-sm"  name="all"> All Articles </button> 
+                    <button style= "color: #051622;" href="#" class="btn btn-light btn-sm"  name="all"> All Tasks </button> 
                    </div>
 
                   <div>   
-                 <button style= "color: #051622;" href="#" class="btn btn-light btn-sm"  name="unpublished"> Completed Tasks </button> 
+                 <button style= "color: #051622;" href="#" class="btn btn-light btn-sm"  name="completed"> Completed Tasks </button> 
                 </div>
 
                 <div> 
-                   <button style= "color: #051622;" href="#" class="btn btn-light btn-sm " name="published"> Uncompleted Tasks </button>  
+                   <button style= "color: #051622;" href="#" class="btn btn-light btn-sm " name="uncompleted"> Uncompleted Tasks </button>  
                   </div>
 
 
@@ -66,15 +67,25 @@
 
           </ul>
         </div>
+
         </div>
 
-          <div style="padding-left: 1.5rem;">
+          <div class="d-none d-md-block" style="padding-left: 1.5rem;">
               <form  action="{% url 'todos:searchTodos' %}" method="post">
                 {% csrf_token %}
                <input class="mr-sm-2"  id="searchInput" name="search" type="text" placeholder="Search">
                <span > <button  name="submit" class="btn btn-dark btn-sm">Search</button> </span>
               </form> 
           </div>
+
+          <div style="padding-left: 1.5rem;" class="d-block d-md-none">
+            <button onclick="searchBar()"style="background: none !important;border: none;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-search text-light" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+              </svg>
+            </button>
+          </div>
+
         </div>
 
       </div>
@@ -85,14 +96,24 @@
 
   <div style="margin-top: -28px;" class="d-flex justify-content-end">
     <a id="addIcon" onclick="addNote()" style="color: rgb(255, 162, 22);margin-right: 30px;cursor: pointer;"  >
-        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+        <svg id="addIconSVG" xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
           </svg>
     </a>
 </div>
 
+
+<div id="search_bar"  style="padding-left: 1.5rem;display: none;">
+  <form  action="{% url 'todos:searchTodos' %}" method="post">
+    {% csrf_token %}
+   <input  style="width: 12rem;" class="mr-sm-2"  id="searchInput" name="search" type="text" placeholder="Search">
+   <span > <button  name="submit" class="btn btn-dark btn-sm">Search</button> </span>
+  </form> 
+</div>
+
       <div style="margin: 0.5cm 1cm 1cm 1cm">
-        
+
+
         <form
         id="addNoteForm"
         style="display: none;margin-bottom:30px"
@@ -113,7 +134,7 @@
 
         {% for entry in entries %}
         <div class="row">
-            <div class="col-10">
+            <div class="col-9 col-md-10">
                 <a
                 href="{% url 'todos:todoDetail' entry.id %}"
                 style="
@@ -128,7 +149,7 @@
               <p style="margin: 0cm;color:rgb(82, 82, 82)" >last updated <span>&bull;</span>   <span>{{entry.date_added|timesince}} ago</span>  </p>
             </div>
 
-            <div class="col-2">
+            <div class="col-3 col-md-2">
                 <a href="{% url 'todos:editTodo' entry.id %}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square text-primary" viewBox="0 0 16 16">
                         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>

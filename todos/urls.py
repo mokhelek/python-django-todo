@@ -10,4 +10,5 @@ urlpatterns = [
     path('edit-todo/<int:todo_id>/',views.editTodo, name = "editTodo"),         # URL to modify the to-do
     path('mark-complete/<int:todo_id>/',views.markComplete, name = "markComplete"),  
     path('search-todos',views.searchTodos , name = "searchTodos"), 
+    path('filter-todos',views.filterTodos , name = "filterTodos"), 
 ]
