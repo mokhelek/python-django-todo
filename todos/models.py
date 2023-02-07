@@ -2,6 +2,12 @@ from django.db import models
 
 # Create your models here.
 
+
+"""
+A database table for a Todo Entry
+
+"""
+
 class Entry(models.Model):
     title = models.CharField(max_length=100)       
     body = models.TextField(null=True,blank=True)

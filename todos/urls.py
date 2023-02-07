@@ -8,7 +8,7 @@ urlpatterns = [
     path('todo/<int:todo_id>/',views.todoDetail, name = "todoDetail"),          # URL to a selected to-do
     path('delete-todo/<int:todo_id>/',views.deleteTodo, name = "deleteTodo"),       # URL to delete a to-do
     path('edit-todo/<int:todo_id>/',views.editTodo, name = "editTodo"),         # URL to modify the to-do
-    path('mark-complete/<int:todo_id>/',views.markComplete, name = "markComplete"),  
-    path('search-todos',views.searchTodos , name = "searchTodos"), 
-    path('filter-todos',views.filterTodos , name = "filterTodos"), 
+    path('mark-complete/<int:todo_id>/',views.markComplete, name = "markComplete"),     # URL to mark the to-do
+    path('search-todos',views.searchTodos , name = "searchTodos"),      # URL to search the to-do
+    path('filter-todos',views.filterTodos , name = "filterTodos"),      # URL to filter the to-do
 ]

@@ -2,6 +2,10 @@ from django.forms import ModelForm
 from django import forms 
 from .models import *
 
+"""
+Django form for inputing the Todos
+
+"""
 
 class EntryForm(ModelForm):
    
